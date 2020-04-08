@@ -7,15 +7,18 @@ namespace Your.Application.Models
 {
     public class PagedResults<T>
     {
-        public int PageCount { get; }
         public int ItemCount { get; }
+        public int PageCount { get; }
+        
         public int Skip { get; }
         public int Take { get; }
+        
         public int FirstPage { get; }
         public int LastPage { get; }
+        
         public int NextPage { get; }
+        public int CurrentPage { get; }
         public int PreviousPage { get; }
-        public IEnumerable<T> PageOfResults { get; }
 
         public PagedResults(IQueryable<T> results, int pageNumber, int resultsPerPage)
         {
@@ -31,8 +34,8 @@ namespace Your.Application.Models
             LastPage = LastPage = PageCount == 0 ? 1 : PageCount;
             
             NextPage = Math.Min(pageNumber + 1, LastPage);
+            CurrentPage = pageNumber;
             PreviousPage = Math.Max(pageNumber - 1, FirstPage);
-            
         }
     }
 }
