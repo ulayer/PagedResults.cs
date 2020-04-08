@@ -13,6 +13,8 @@ namespace Your.Application.Models
         public int Skip { get; }
         public int Take { get; }
         
+        public IEnumerable<T> PageOfResults { get; }
+        
         public int FirstPage { get; }
         public int LastPage { get; }
         
