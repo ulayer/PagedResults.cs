@@ -30,13 +30,13 @@ return new PagedResults<ModelName>
             if (@Model.PagedResults.PageCount > 10)
             {
                 var active = string.Empty;
-                if (((@Model.PagedResults.CurrentPage - 5) + i) == @Model.PagedResults.CurrentPage)
+                if (((@Model.PagedResults.CurrentPage - 4) + i) == @Model.PagedResults.CurrentPage)
                 {
                     active = "active";
                 }
                 if ((i + (@Model.PagedResults.CurrentPage - 5)) <= ((@Model.PagedResults.PageCount) - 1) && (i + (@Model.PagedResults.CurrentPage - 5) >= 0))
                 {
-                    <li class="page-item @active"><a href="./@((@Model.PagedResults.CurrentPage-5) + i)" class="page-link">@((@Model.PagedResults.CurrentPage-5) + i)</a></li>
+                    <li class="page-item @active"><a href="./@((@Model.PagedResults.CurrentPage-4) + i)" class="page-link">@((@Model.PagedResults.CurrentPage-4) + i)</a></li>
                 }
             }
             else
@@ -50,7 +50,9 @@ return new PagedResults<ModelName>
             }
         }
         
-        @if (@Model.PagedResults.NextPage != @Model.PagedResults.LastPage)
+        
+        
+        @if (@Model.PagedResults.CurrentPage != @Model.PagedResults.LastPage)
         {
             <li class="page-item"><a href="./@Model.PagedResults.NextPage" class="page-link">
                 <span aria-hidden="true">&raquo;</span>
