@@ -19,8 +19,8 @@ namespace Your.Application.Models
 
         public PagedResults(IQueryable<T> results, int pageNumber, int resultsPerPage)
         {
-            PageCount = (int) Math.Ceiling((double) ItemCount / resultsPerPage);
             ItemCount = results.Count();
+            PageCount = (int) Math.Ceiling((double) ItemCount / resultsPerPage);
             
             Skip = (pageNumber - 1) * resultsPerPage;
             Take = resultsPerPage;
@@ -28,7 +28,7 @@ namespace Your.Application.Models
             PageOfResults = results.Skip(Skip).Take(Take).ToList();
             
             FirstPage = 1;
-            LastPage = PageCount;
+            LastPage = LastPage = PageCount == 0 ? 1 : PageCount;
             
             NextPage = Math.Min(pageNumber + 1, LastPage);
             PreviousPage = Math.Max(pageNumber - 1, FirstPage);
