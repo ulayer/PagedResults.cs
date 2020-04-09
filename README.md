@@ -6,7 +6,7 @@ A C# Generic Class to paginate an IQueryable.
 ### Get a PagedResult Object
 ```cs
 return new PagedResults<ModelName>
-            (_Context.DbSetName.AsQueryable(),
+            (_Context.DbSetName,
                 pageNumber,
                 resultsPerPage);
 ```
@@ -15,7 +15,7 @@ return new PagedResults<ModelName>
 ```html
 <nav aria-label="Page navigation example">
     <ul class="pagination">
-        @if ((@Model.PagedResults.NextPage-1) != 1) // Show a link to the first page as well as previous page as long as we are not on the first page.
+        @if (@Model.PagedResults.CurrentPage != 1) // Show a link to the first page as well as previous page as long as we are not on the first page.
         {
             <li class="page-item"><a href="./@Model.PagedResults.FirstPage" class="page-link">First</a></li>
             <li class="page-item">
@@ -25,18 +25,21 @@ return new PagedResults<ModelName>
                 </a></li>
         }
         
-        @for (int i = 1; i < (@Model.PagedResults.PageCount + 1) && i < 10; i += 1)
+        @for (int i = 1; i <= @Model.PagedResults.PageCount + 1 && i < 10; i++)
         {
             if (@Model.PagedResults.PageCount > 10)
             {
                 var active = string.Empty;
-                if (((@Model.PagedResults.CurrentPage - 4) + i) == @Model.PagedResults.CurrentPage)
+                var currentPage = ((@Model.PagedResults.CurrentPage - 5) + i);
+                if (currentPage == @Model.PagedResults.CurrentPage)
                 {
                     active = "active";
                 }
-                if ((i + (@Model.PagedResults.CurrentPage - 5)) <= ((@Model.PagedResults.PageCount) - 1) && (i + (@Model.PagedResults.CurrentPage - 5) >= 0))
+                if (currentPage <= 
+                    ((@Model.PagedResults.PageCount) - 1) && 
+                    (currentPage > 0))
                 {
-                    <li class="page-item @active"><a href="./@((@Model.PagedResults.CurrentPage-4) + i)" class="page-link">@((@Model.PagedResults.CurrentPage-4) + i)</a></li>
+                    <li class="page-item @active"><a href="./@currentPage" class="page-link">@currentPage</a></li>
                 }
             }
             else
