@@ -27,7 +27,7 @@ return new PagedResults<ModelName>
         
         @{ var pageCount = @Model.PagedResults.PageCount; }
         
-        @for (int i = 1; i <= pageCount + 1 && i < 10; i++)
+        @for (int i = 1; i <= pageCount && i < 10; i++)
         {
             var currentPage = @Model.PagedResults.CurrentPage;
             if (pageCount > 10)
