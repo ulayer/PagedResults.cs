@@ -25,30 +25,23 @@ return new PagedResults<ModelName>
                 </a></li>
         }
         
-        @for (int i = 1; i <= @Model.PagedResults.PageCount + 1 && i < 10; i++)
+        @{ var pageCount = @Model.PagedResults.PageCount; }
+        
+        @for (int i = 1; i <= pageCount + 1 && i < 10; i++)
         {
-            if (@Model.PagedResults.PageCount > 10)
+            var currentPage = @Model.PagedResults.CurrentPage;
+            if (pageCount > 10)
             {
-                var active = string.Empty;
-                var currentPage = ((@Model.PagedResults.CurrentPage - 5) + i);
-                if (currentPage == @Model.PagedResults.CurrentPage)
+                var activePage = ((currentPage - 5) + i);
+                var active = activePage == currentPage ? "active" : string.Empty;
+                if (activePage <= (pageCount - 1) && (activePage > 0))
                 {
-                    active = "active";
-                }
-                if (currentPage <= 
-                    ((@Model.PagedResults.PageCount) - 1) && 
-                    (currentPage > 0))
-                {
-                    <li class="page-item @active"><a href="./@currentPage" class="page-link">@currentPage</a></li>
+                    <li class="page-item @active"><a href="./@activePage" class="page-link">@activePage</a></li>
                 }
             }
             else
             {
-                var active = string.Empty;
-                if (i == @Model.PagedResults.CurrentPage)
-                {
-                    active = "active";
-                }
+                var active = i == currentPage ? "active" : string.Empty;
                 <li class="page-item @active"><a href="./@i" class="page-link">@i</a></li>
             }
         }
